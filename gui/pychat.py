@@ -154,10 +154,15 @@ class simpleapp_tk(Tkinter.Tk):
     
     def getMessage(self):
         while 1:
-            data = self.sock.recv(4096)
-            if data:
-                data = json.loads(data)
-                self.labelVariable.set(data['username']+": "+data['msg']+"\n"+self.labelVariable.get())
+            try:
+                data = self.sock.recv(4096)
+                if data:
+                    data = json.loads(data)
+                    print data['username']
+                    #if (data['username'] != self.user) or (self.user == "Guest"):
+                    self.labelVariable.set(data['username']+": "+data['msg']+"\n"+self.labelVariable.get())
+            except:
+                continue
 
 if __name__ == "__main__":
     app = simpleapp_tk(None)
